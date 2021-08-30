@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class Restaurant {
@@ -18,15 +20,16 @@ public class Restaurant {
     }
 
     public boolean isRestaurantOpen() {
-        return true;
-        //DELETE ABOVE STATEMENT AND WRITE CODE HERE
+        //Returns whether a restaurant is open or not
+        return (getCurrentTime().isAfter(this.openingTime)  && getCurrentTime().isBefore(this.closingTime));
     }
 
     public LocalTime getCurrentTime(){ return  LocalTime.now(); }
 
     public List<Item> getMenu() {
-        return null;
-        //DELETE ABOVE RETURN STATEMENT AND WRITE CODE HERE
+        //Returns the items list added to the restaurant instance
+        return Collections.unmodifiableList(this.menu);
+
     }
 
     private Item findItemByName(String itemName){
