@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,4 +83,42 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    @Test
+    public void selecting_items_from_menu_should_return_the_order_cost()
+    {
+        //Create the restaurant and add all items
+        restaurant = createRestaurant();
+        restaurant.addToMenu("Sizzling brownie",319);
+        restaurant.addToMenu("Garlic bread",111);
+
+        //select few items from the menu
+        ArrayList<String> orderNames = new ArrayList<>();
+        orderNames.add("Sweet corn soup");
+        orderNames.add("Garlic bread");
+
+        //verify the order cost
+        int orderTotal = restaurant.calculateOrderCost(orderNames);
+        assertEquals(230,orderTotal);
+    }
+
+    @Test
+    public void removing_items_from_order_should_return_the_updated_order_cost()
+    {
+        //Create the restaurant and add all items
+        restaurant = createRestaurant();
+        restaurant.addToMenu("Sizzling brownie",319);
+        restaurant.addToMenu("Garlic bread",111);
+
+        //select few items from the menu
+        ArrayList<String> orderNames = new ArrayList<>();
+        orderNames.add("Sweet corn soup");
+        orderNames.add("Vegetable lasagne");
+        orderNames.add("Garlic bread");
+
+        //verify the order cost after removing few items
+        int preOrderTotal = restaurant.calculateOrderCost(orderNames);
+        orderNames.remove("Sweet corn soup");
+        assertNotEquals(preOrderTotal,restaurant.calculateOrderCost(orderNames));
+
+    }
 }
